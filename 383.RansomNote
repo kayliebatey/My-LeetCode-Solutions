@@ -1,0 +1,32 @@
+class Solution {
+    //time complexity: O(n*m)
+    public boolean canConstruct(String ransomNote, String magazine) {
+        boolean check= false;
+        HashMap <Character, Integer> mag= new HashMap<Character,Integer>();
+       
+        //O(m(magazine length))
+        for (int i=0; i<magazine.length(); i++){
+            if(mag.containsKey(magazine.charAt(i)))
+                mag.put(magazine.charAt(i), mag.get(magazine.charAt(i))+1);
+            else mag.put(magazine.charAt(i),1);
+        }
+        
+        int counter=0;
+        //O(n(ransomNote length))
+        do{
+            check= false;      
+            if (mag.getOrDefault(ransomNote.charAt(counter),0)!=null)
+            {
+                int val=mag.getOrDefault(ransomNote.charAt(counter),0);
+                if(val>=1)
+                {
+                    check=true;
+                    mag.replace(ransomNote.charAt(counter),mag.get(ransomNote.charAt(counter))-1);
+                }
+            }
+            counter++;    
+        }while(check==true && counter< ransomNote.length());
+        
+        return check;
+    }
+}
