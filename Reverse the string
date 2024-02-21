@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+#include <cctype> //isalpha()
+
+using namespace std;
+
+string reverseOnlyLetters(string s) {
+   
+   int length = s.length();
+   int j = length - 1;
+   int i = 0;
+   while(i < j){
+      if ((isalpha(s.at(i))) && (isalpha(s.at(j)))){
+         //if i and j are letters then swap them and move j and i
+         char temp = s[i];
+         s[i] = s[j];
+         s[j] = temp;
+         i++;
+         j--;
+      }
+      else if (isalpha(s.at(i))){
+       // i is a letter and j isn't move j over and not i
+       j--;
+      }
+      else if (isalpha(s.at(j))){
+       // j is a letter and i isn't move i over and not j
+       i++;
+      }
+   }
+   return s;
+}
+
+int main() {
+    string input;
+    cin>>input;
+    cout<<reverseOnlyLetters(input) <<endl;
+    return 0;
+}
