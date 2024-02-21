@@ -1,0 +1,53 @@
+// Kaylie Batey
+// 1/29/2024
+// CS 43789 Spring 2024
+#include <iostream>
+#include <fstream>
+
+#include <unordered_map>
+
+using namespace std;
+
+int main()
+{
+    string inStr;
+    cin >> inStr;
+//    int check;
+//    check = scanf("%s", &inStr);
+//    if(check != 1)
+//    {
+//        printf("Error received %d values", check);
+//        return 1;
+//    }
+
+    unordered_map<char, int> uMap;
+    int size = inStr.length();
+    for (int i = 0; i < size; i++)
+    {
+        if (uMap.find(inStr[i]) == uMap.end())
+        {
+            uMap.insert(make_pair(inStr[i], 1));
+        }
+        else
+        {
+            uMap[inStr[i]]++;
+        }
+    }
+
+    int oddCount = 0;
+    int tempCount = 0;
+    int maxCount = 0;
+
+    for (auto i : uMap){
+        tempCount = i.second;
+        if (tempCount % 2 != 0) oddCount++;
+        maxCount += tempCount;
+    }
+    tempCount = maxCount;
+
+    if (oddCount > 1) tempCount -= oddCount -1 ;
+    printf("%d\n", tempCount);
+
+
+    return 0;
+}
