@@ -1,0 +1,46 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int findMaxForm(vector<string>& strs, int m, int n) {
+   
+   int zeros = 0;
+   int ones = 0;
+   
+   std::vector<std::vector<int>> memo(m+1, std::vector<int>(n+1,0));
+   int numStrings = strs.size();
+   
+   for (int i = numStrings-1; i >= 0; i--){
+      string astr = strs[i];
+      for(char c: astr) {
+         c == '0' ? zeros++ : ones++;
+         for(int j = m; j >= zeros; j--){
+            for(int k = n; k >= ones; k--){
+               memo[j][k] = max(memo[j][k],  memo[j-zeros][k-ones] + 1 );
+              // cout << memo[m][n] << " ";
+            }
+         }
+      }
+   }
+  
+   return memo[m][n] +1;
+}
+
+int main () {
+    int sizeStrs;
+    cin >> sizeStrs;
+
+    vector<string> strs(sizeStrs);
+    for (int i = 0; i < sizeStrs; i++) {
+        cin >> strs[i];
+    }
+
+    int m, n;
+    cin >> m >> n;
+
+    cout << findMaxForm(strs, m, n) << endl;
+
+    return 0;
+}
