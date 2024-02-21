@@ -1,0 +1,32 @@
+//Kaylie Batey
+
+#include <iostream>
+#include <string>
+#include <unordered_map>
+// Add your appropriate includes
+
+int firstUnique(std::string input){
+   int size = input.length();
+   std::unordered_map<char, int> uMap;
+   int index = 0;
+   
+   //O(n) but the input constraint is pretty low, so shouldn't be a problem
+   for (int i = 1; i < size; i++){
+     if (uMap.find(input[index]) == uMap.end() && (input[index] == input[i])){
+         uMap.insert(std::make_pair(input[index], 1));
+         index++;
+      }
+      else if (uMap.find(input[index]) != uMap.end())
+        index++;
+   }
+   
+   return index;
+}
+   
+int main() {
+  //freopen("./input.txt","r",stdin);
+  std::string input = "";
+  std::getline(std::cin,input);
+  printf("%c",input[firstUnique(input)] );
+  return 0;
+}
