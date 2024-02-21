@@ -1,0 +1,60 @@
+// main.cpp
+// Kaylie Batey
+// 1/28/2024
+// CS 43789 Spring 2024
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    // get array size and values
+    int arrSz;
+    int check;
+    check = scanf("%d", &arrSz);
+    if(check != 1)
+    {
+        printf("Error recieved %d values", check);
+        return 1;
+    }
+
+    int* inArr = new int[arrSz];
+
+    for (int i = 0; i < arrSz; i++)
+    {
+        check = scanf("%d", &inArr[i]);
+        if(check != 1)
+        {
+            printf("Error recieved %d values", check);
+            return 1;
+        }
+    }
+    sort(inArr, inArr+ arrSz);
+    int counter = 0;
+    int maxLen = 0;
+    int tempMax = 0;
+    if (arrSz != 0){
+        maxLen++;
+        tempMax++;
+    }
+    int i = 0;
+    while(counter < arrSz)
+    {
+        for(int j = i; j < arrSz; j++)
+        {
+            i++;
+            if((inArr[j]+1) == inArr[j+1])
+                tempMax++;
+            else break;
+        }
+        counter = i + counter;
+        if(tempMax > maxLen) maxLen = tempMax;
+        tempMax = 1;
+    }
+
+    printf("%d\n", maxLen);
+    delete[] inArr;
+    return 0;
+}
