@@ -1,0 +1,106 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+ struct Job {
+      int index;
+      int start;
+      int end;
+      int profit;
+      int pTime;
+      
+      Job(int i, int s, int e, int p) : index(i), start(s), end(e), profit(p) {}
+      
+      bool operator < (const Job& j_one ){
+         return this-> end < j_one.end;
+      }
+   
+   };
+   
+int binarySearch(vector<Job>& jobs, int index) 
+{ 
+    int lo = 0, hi = index - 1; 
+    while (lo <= hi) 
+    { 
+        int mid = (lo + hi) / 2; 
+        
+        if (jobs[mid].end <= jobs[index].start) 
+        { 
+           //we want the job with the largest index that finishes before 
+           // our current job starts so we check again
+            if (jobs[mid + 1].end <= jobs[index].start) 
+                lo = mid + 1; 
+            else
+                return mid; 
+        } 
+        else
+            hi = mid - 1; 
+    } 
+   
+    return -1; 
+} 
+
+int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+   std::vector<Job> jobs;
+   int size = startTime.size();
+   
+   for (int i = 0; i < size; i++)
+      jobs.push_back(Job(i+1, startTime[i], endTime[i], profit[i]));
+   
+   std::sort(begin(jobs),end(jobs));
+
+  
+   for (int i = 0; i < size; i++ ){
+      int index = binarySearch(jobs, i);
+      jobs[i].pTime = index;
+   }
+               
+    std:: vector <int> result(size);
+    result[0] = jobs[0].profit;
+    for (int i = 1; i< size; i++){
+      int temp = jobs[i].profit;
+      if (jobs[i].pTime != -1)
+         temp += result[jobs[i].pTime];   
+      result[i] = (temp > result[i-1]) ? temp : result[i-1];
+    }
+   
+   return result[size-1];
+}
+
+
+int main(){
+    int sizeOfArrays;
+    int element;
+    vector<int>startTime;
+    vector<int>endTime;
+    vector<int>profit;
+    cin>>sizeOfArrays;
+    
+    int i=0;
+    while(i<sizeOfArrays){
+        cin>>element;
+        startTime.push_back(element);
+        i++;
+    }
+    
+    int j= 0;
+    while(j<sizeOfArrays){
+        cin>>element;
+        endTime.push_back(element);
+        j++;
+    }
+    
+    int k=0;
+    while(k<sizeOfArrays){
+        cin>>element;
+        profit.push_back(element);
+        k++;
+    }
+    
+    cout<<jobScheduling(startTime, endTime, profit)<<endl;
+    
+    return 0;
+}
+   
