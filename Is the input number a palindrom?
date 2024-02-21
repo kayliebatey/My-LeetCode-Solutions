@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+bool isPalindrome(int x) {
+   bool isPali = true;
+   int length = to_string(x).length();
+   int temp;
+   for (int i=0; i<(length/2); i++){
+     temp = length - i - 1;
+     if(to_string(x).at(i)!=to_string(x).at(temp)) isPali=false;
+   }
+   return isPali;
+}
+
+int main() {
+    int input;
+    cin>>input;
+    cout << boolalpha<<isPalindrome(input) << endl;  
+    return 0;
+}
